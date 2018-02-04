@@ -11,9 +11,9 @@ using UnityEngine;
     class MeleeUnit : Unit
     {
 
-        //protected string name;
+      /*  protected string name;
 
-      /*  public string propName
+        public string propName
         {
             get
             {
@@ -26,7 +26,7 @@ using UnityEngine;
             }
         }
 
-        //protected int maxHp;
+        protected int maxHp;
 
         public int propMaxHp
         {
@@ -41,7 +41,7 @@ using UnityEngine;
             }
         }
 
-       // protected int hp;                           //variables and properties   //these things where causing a lot of problems
+        protected int hp;                           //variables and properties   //these things where causing a lot of problems
 
         public int propHp
         {
@@ -56,7 +56,7 @@ using UnityEngine;
             }
         }
 
-        //protected int x;
+        protected int x;
 
         public int propX
         {
@@ -71,7 +71,7 @@ using UnityEngine;
             }
         }
 
-       // protected int y;
+       protected int y;
 
         public int propY
         {
@@ -86,7 +86,7 @@ using UnityEngine;
             }
         }
 
-       // protected int attack;
+       protected int attack;
 
         public int propAttack
         {
@@ -101,7 +101,7 @@ using UnityEngine;
             }
         }
 
-        //protected int range;
+        protected int range;
 
         public int propRange
         {
@@ -116,7 +116,7 @@ using UnityEngine;
             }
         }
 
-       // protected int speed;
+       protected int speed;
 
         public int propSpeed
         {
@@ -131,7 +131,7 @@ using UnityEngine;
             }
         }
 
-       // protected char faction;
+       protected char faction;
 
         public char propFaction
         {
@@ -146,7 +146,7 @@ using UnityEngine;
             }
         }
 
-       //protected char symbol;
+       protected char symbol;
 
         public char propSymbol
         {
@@ -381,8 +381,8 @@ using UnityEngine;
         {
             if (target != null)                                                     //checking if target isnt null
             {
-                if (target != this)                                                 // checking that the target isnt this
-                {
+               // if (target != this)                                                 // checking that the target isnt this
+                //{
                     if (target.propFaction != this.propFaction)                     //checking that the target isnt of the same faction
                     {
                         if (target.isDead() == false)                  // checking that the target isnt dead
@@ -398,7 +398,7 @@ using UnityEngine;
 
                         }
                     }
-                }
+               // }
             }
         }
         return closestBuilding;

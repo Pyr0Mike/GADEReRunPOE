@@ -8,7 +8,7 @@ using UnityEngine;
 
 
 
-    abstract class Building : MonoBehaviour
+    abstract class Building 
     {
 
     protected string buildPicName;

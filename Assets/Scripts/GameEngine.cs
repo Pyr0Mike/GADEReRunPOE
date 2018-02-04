@@ -185,8 +185,8 @@ public class GameEngine : MonoBehaviour {
 
                 else
                 {
-                    Debug.Log(merc.toString());
-                    Debug.Log("is dead");
+                   // Debug.Log(merc.toString());
+                    Debug.Log("unit has died");
                     merc.propSymbol = 'X';
                 }
             }
@@ -211,11 +211,11 @@ public class GameEngine : MonoBehaviour {
                     {
                         if (tower.propBuildingType == "Factory")
                         {
-                            // Unit newUnit = tower.generateUnit();
+                             Unit newUnit = tower.generateUnit();
 
-                            // Array.Resize(ref gameMap.unitArray, gameMap.unitArray.Length + 1);
-                            // gameMap.propUnitArray[gameMap.propUnitArray.Length - 1] = newUnit;
-                            Debug.Log("Making a unit");
+                             Array.Resize(ref unitArray, unitArray.Length + 1);
+                             unitArray[unitArray.Length - 1] = newUnit;
+                            Debug.Log("Made a unit: " + newUnit.propPicName);
                         }
                         else
                         {
@@ -228,6 +228,7 @@ public class GameEngine : MonoBehaviour {
                 }
                 else
                 {
+                    Debug.Log("Building got wrecked");
                     tower.propSymbol = 'U';
                 }
             }

@@ -8,7 +8,7 @@ using UnityEngine;
 
 
 
-    abstract class Unit : MonoBehaviour
+    abstract class Unit 
     {
 
     protected string picName;
