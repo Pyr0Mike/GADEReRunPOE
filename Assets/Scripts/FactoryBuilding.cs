@@ -96,13 +96,15 @@ using UnityEngine;
 
         
 
-        public FactoryBuilding(string unitsProd,int health ,char team, char symbol, int spX, int spY) : base(5)
+        public FactoryBuilding(string pic ,string unitsProd,int health, int maxhealth ,char team, char symbol, int spX, int spY) : base(5)
         {
+        this.propBuildPicName = pic;
             this.propBuildingType = "Factory";
             this.propUnitsProd = unitsProd;
             this.propSpawnX = spX;
             this.propSpawnY = spY;
             this.propHp = health;
+        this.propMaxHp = maxhealth;
             this.propFaction = team;
             this.propSymbol = symbol;
             unitSymChoice();
@@ -138,7 +140,7 @@ using UnityEngine;
         public override string toString()
         {
             string info = "This is a Factory Building that Produces " + this.propUnitsProd + " Units For The " + this.propFaction + " Faction. It has " + this.propHp + " HP left";
-            Console.WriteLine(info);
+            Debug.Log(info);
             return info; 
         }
 
@@ -150,18 +152,30 @@ using UnityEngine;
 
         public override Unit generateUnit()     // Unit generator method
         {
-            Unit newUnit = new MeleeUnit(0, 't', '.');
+            Unit newUnit = new MeleeUnit("noPicture",0, 't', '.');
+        string rangePic = "Placeholder";
+        string meleePic = "Placeholder";
+        if(this.propFaction == 'R')
+        {
+            rangePic = "redArcher";
+            meleePic = "redKnight";
+        }
+        else if(this.propFaction == 'B')
+        {
+            rangePic = "blueArcher";
+            meleePic = "blueKnight";
+        }
             switch(this.propUnitsProd)
             {
                 case "Melee":
-                    newUnit = new MeleeUnit(100, this.propFaction, this.propMeleeSym);
+                    newUnit = new MeleeUnit(meleePic ,100, this.propFaction, this.propMeleeSym);
                     newUnit.propX = this.spawnX; newUnit.propY = this.spawnY;
-                    Console.WriteLine("Spawned new melee unit for Faction :" + this.propFaction);
+                    Debug.Log("Spawned new melee unit for Faction :" + this.propFaction);
                     break;
                 case "Ranged":
-                    newUnit = new RangedUnit(60, this.propFaction, this.propRangeSym);
+                    newUnit = new RangedUnit(rangePic ,60, this.propFaction, this.propRangeSym);
                     newUnit.propX = this.spawnX; newUnit.propY = this.spawnY;
-                    Console.WriteLine("Spawned new ranged unit for Faction :" + this.propFaction);
+                    Debug.Log("Spawned new ranged unit for Faction :" + this.propFaction);
                     break;
             }
             return newUnit;
@@ -169,7 +183,7 @@ using UnityEngine;
 
         public override void generateResource()
         {
-            Console.WriteLine("This AINT No Resource Building");  //never gonna be used
+           Debug.Log("This AINT No Resource Building");  //never gonna be used
         }
 
      

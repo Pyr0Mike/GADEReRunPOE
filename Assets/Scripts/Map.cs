@@ -10,22 +10,22 @@ using UnityEngine;
 
     class Map
     {
-        protected char[,] mapArray = new char[20, 20];
+       /* protected char[,] mapArray = new char[20, 20];
 
         public char[,] propMapArray
         {
             get
             {
-                return mapArray;
+                return mapArray;        // not needed anymore
             }
 
             set
             {
                 mapArray = value;
             }
-        }
+        }*/
 
-        public Unit[] unitArray;
+        protected Unit[] unitArray;
 
         public Unit[] propUnitArray
         {
@@ -67,54 +67,32 @@ using UnityEngine;
             propBuildArray = new Building[6];
             generateUnits(propUnitArray);
             populateBuildArray();
-            updateMap();
+           // updateMap();
 
         }
 
         public void populateBuildArray()         //produces buildings.           locations are predecided
         {
-            propBuildArray[0] = new ResourceBuilding(300, 'R', 'S', "Iron", 2, 100);
+            propBuildArray[0] = new ResourceBuilding("redResource",300, 300, 'R', 'S', "Iron", 2, 100);
             propBuildArray[0].propPosX = 10; propBuildArray[0].propPosY = 0;
 
-            propBuildArray[1] = new ResourceBuilding(300, 'B', 'Q', "Iron", 2, 100);
+            propBuildArray[1] = new ResourceBuilding("blueResource",300, 300, 'B', 'Q', "Iron", 2, 100);
             propBuildArray[1].propPosX = 10; propBuildArray[1].propPosY = 19;
 
-            propBuildArray[2] = new FactoryBuilding("Melee", 300, 'R', 'H', 1, 1);
+            propBuildArray[2] = new FactoryBuilding("redFactory" ,"Melee", 300, 300, 'R', 'H', 1, 1);
             propBuildArray[2].propPosX = 0; propBuildArray[2].propPosY = 0;
 
-            propBuildArray[3] = new FactoryBuilding("Ranged", 300, 'R', 'H', 18, 1);
+            propBuildArray[3] = new FactoryBuilding("redFactory","Ranged", 300, 300, 'R', 'H', 18, 1);
             propBuildArray[3].propPosX = 19; propBuildArray[3].propPosY = 0;
 
-            propBuildArray[4] = new FactoryBuilding("Melee", 300, 'B', 'T', 18, 18);
+            propBuildArray[4] = new FactoryBuilding("blueFactory" ,"Melee", 300, 300, 'B', 'T', 18, 18);
             propBuildArray[4].propPosX = 19; propBuildArray[4].propPosY = 19;
 
-            propBuildArray[5] = new FactoryBuilding("Ranged", 300, 'B', 'T', 1, 18);
+            propBuildArray[5] = new FactoryBuilding("blueFactory" ,"Ranged", 300, 300, 'B', 'T', 1, 18);
             propBuildArray[5].propPosX = 0; propBuildArray[5].propPosY = 19;
         }
 
-     /*   public void buildingGenResource()  //generates resources from each resource building
-        {
-            foreach(Building producer in propBuildArray)
-            {
-                if(producer.GetType().ToString().Split('.')[producer.GetType().ToString().Length - 1] == "ResourceBuilding")
-                {
-                    producer.generateResource();
-                }
-            }
-        }*/                                                                                                                         //was easier to just do all this in the game engine
-
-      /*  public void buildingGenUnit()         // generates a unit from each factory building
-        {
-            foreach(Building factory in propBuildArray)
-            {
-                if(factory.GetType().ToString().Split('.')[factory.GetType().ToString().Length - 1] == "FactoryBuilding")
-                {
-                    Unit newUnit = factory.generateUnit();
-                    Array.Resize(ref unitArray, unitArray.Length + 1);
-                    propUnitArray[propUnitArray.Length - 1] = newUnit;
-                }
-            }
-        }*/
+     
 
         public void generateUnits(Unit[] arrayOfUnits) //method to generate units in the array
         {
@@ -125,16 +103,16 @@ using UnityEngine;
                 switch(unitRoll)                                     //deciding each units type and faction
                 {
                     case 1:
-                        arrayOfUnits[i] = new MeleeUnit(100,'R', 'M');      
+                        arrayOfUnits[i] = new MeleeUnit("redKnight" ,100,'R', 'M');      
                         break;
                     case 2:
-                        arrayOfUnits[i] = new RangedUnit(60, 'R', 'A');
+                        arrayOfUnits[i] = new RangedUnit("redArcher" ,60, 'R', 'A');
                         break;
                     case 3:
-                        arrayOfUnits[i] = new MeleeUnit(100,'B', 'm');
+                        arrayOfUnits[i] = new MeleeUnit("blueKnight" ,100,'B', 'm');
                         break;
                     case 4:
-                        arrayOfUnits[i] = new RangedUnit(60, 'B', 'a');
+                        arrayOfUnits[i] = new RangedUnit("blueArcher",60, 'B', 'a');
                         break;
                 }
 
@@ -148,7 +126,7 @@ using UnityEngine;
             }
         }
 
-        public void updateMap()  //method to update the map array
+       /* public void updateMap()  //method to update the map array
         {
             int k;
             int l;
@@ -170,7 +148,7 @@ using UnityEngine;
 
             foreach( Building tower in propBuildArray)
             {
-                propMapArray[tower.propPosX, tower.propPosY] = tower.propSymbol;
+                propMapArray[tower.propPosX, tower.propPosY] = tower.propSymbol;        // not needed anymore
             }
         }
 
@@ -191,7 +169,7 @@ using UnityEngine;
             }
 
             return mapString;
-        }
+        }*/
 
 
 

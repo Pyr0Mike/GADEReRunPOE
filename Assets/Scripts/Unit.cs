@@ -10,7 +10,24 @@ using UnityEngine;
 
     abstract class Unit : MonoBehaviour
     {
-        protected string name;
+
+    protected string picName;
+
+    public string propPicName
+    {
+        get
+        {
+            return picName;
+        }
+
+        set
+        {
+            picName = value;
+        }
+    }
+
+
+    protected string name;
 
         public string propName
         {
@@ -163,7 +180,9 @@ using UnityEngine;
             }
         }
 
-        public System.Random rando;// = new Random();
+    
+
+    public System.Random rando;// = new Random();
 
         
 
@@ -188,6 +207,16 @@ using UnityEngine;
 
         public abstract void combat(Unit enemy);
 
+        public abstract void combatBuilding(Building tower);
+
+        public abstract bool buildInRange(Building tower);
+
+        public abstract Building closestBuilding(Building[] buildArray);
+
+        public abstract string moveToClosestBuilding(Building closestBuilding);
+
+        public abstract bool attackBuilding(Building closestBuilding, Unit closestUnit);
+
         public abstract bool combatFlag(Unit enemy);
 
         public abstract bool inRange(Unit enemy);
@@ -196,7 +225,7 @@ using UnityEngine;
 
         public abstract string moveToClosestUnit(Unit closestUnit);
 
-        public abstract string runAway(Unit closestUnit);
+        public abstract string runAway();
 
         public abstract bool isDead();
 

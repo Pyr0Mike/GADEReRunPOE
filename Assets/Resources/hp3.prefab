@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212348477672268306}
   m_Layer: 0
   m_Name: hp3
-  m_TagString: Untagged
+  m_TagString: redrawSprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

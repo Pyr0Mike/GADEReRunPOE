@@ -10,7 +10,23 @@ using UnityEngine;
 
     abstract class Building : MonoBehaviour
     {
-        string buildingType;
+
+    protected string buildPicName;
+
+    public string propBuildPicName
+    {
+        get
+        {
+            return buildPicName;
+        }
+
+        set
+        {
+            buildPicName = value;
+        }
+    }
+
+    protected string buildingType;
 
         public string propBuildingType
         {
@@ -70,7 +86,23 @@ using UnityEngine;
             }
         }
 
-        protected char faction;
+    int maxHp;
+
+    public int propMaxHp
+    {
+        get
+        {
+            return maxHp;
+        }
+
+        set
+        {
+            maxHp = value;
+        }
+    }
+
+
+    protected char faction;
 
         public char propFaction
         {
@@ -145,9 +177,9 @@ using UnityEngine;
             }
         }
 
+    
 
-
-        public Building(int sped)            //constructor
+    public Building(int sped)            //constructor
         {
             
             this.propSpeed = sped;

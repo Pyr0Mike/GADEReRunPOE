@@ -74,10 +74,12 @@ using UnityEngine;
 
         
 
-        public ResourceBuilding(int health ,char team, char sym, string resType, int resPT, int remRes) : base(1) // constructor
+        public ResourceBuilding(string pic ,int health, int maxhealth ,char team, char sym, string resType, int resPT, int remRes) : base(1) // constructor
         {
+        this.propBuildPicName = pic;
             this.propBuildingType = "Resource";
             this.propHp = health;
+        this.propMaxHp = maxhealth;
             this.propFaction = team;
             this.propSymbol = sym;
             this.propResourceType = resType;
@@ -102,11 +104,11 @@ using UnityEngine;
             {
                 propGenResources = propGenResources + resourcePerTick;
                 propRemResources = propRemResources - propResourcePerTick;
-                Console.WriteLine("Produced " + this.propResourcePerTick + this.propResourceType +  " For Team " + this.propFaction);
+                Debug.Log("Produced " + this.propResourcePerTick + this.propResourceType +  " For Team " + this.propFaction);
             }
             else
             {
-                Console.WriteLine("No more " + this.propResourceType + " Left to Produce ");
+                Debug.Log("No more " + this.propResourceType + " Left to Produce ");
             }
 
         }
@@ -114,7 +116,7 @@ using UnityEngine;
         public override string toString()
         {
             string info = "This is a Resource Building. It Produces " + this.propResourcePerTick + this.propResourceType + " Per Tick. It has Produced " + propGenResources + ", And Can Produce " + propRemResources + " More";
-            Console.WriteLine(info);
+            Debug.Log(info);
             return info;
         }
 
@@ -126,7 +128,7 @@ using UnityEngine;
         }
         public override Unit generateUnit()
         {
-            Unit notGonnaBeUsed = new MeleeUnit(0, 't', '.'); // just in case it gets used, it can only create a basically no-existant unit
+            Unit notGonnaBeUsed = new MeleeUnit("Is no unit here" ,0, 't', '.'); // just in case it gets used, it can only create a basically no-existant unit
             notGonnaBeUsed = null;                            //pretty much producing a dead body
             return notGonnaBeUsed;
         }

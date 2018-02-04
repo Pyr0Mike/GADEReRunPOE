@@ -162,8 +162,9 @@ using UnityEngine;
             }
         }*/
 
-        public RangedUnit(int health ,char team, char sym) : base(60, 10, 3, 2)
+        public RangedUnit(string pic ,int health ,char team, char sym) : base(60, 10, 3, 2)
         {
+        this.propPicName = pic;
             this.propName = nameSelect();
             this.propHp = health;
             this.propFaction = team;
@@ -260,9 +261,9 @@ using UnityEngine;
 
         public override Unit closestUnit(Unit[] unitArray) // method to determine closest unit
         {
-            Unit closestUnit = new MeleeUnit(0, 't', 't');
+            Unit closestUnit = new MeleeUnit("isNoHere" ,0, 't', 't');
             int closestDist = 3200;
-            closestUnit.propX = 10; closestUnit.propY = 10;
+            closestUnit.propX = 40; closestUnit.propY = 10;
             foreach (Unit target in unitArray)                                          //looping through array
             {
                 if (target != null)                                                     //checking if target isnt null
@@ -322,7 +323,7 @@ using UnityEngine;
             return direction;
         }
 
-        public override string runAway(Unit closestUnit)
+        public override string runAway()
         {
           
             string direction = "";
@@ -369,5 +370,115 @@ using UnityEngine;
             return saveString;
         }
 
+    public override Building closestBuilding(Building[] buildArray)
+    {
+        Building closestBuilding = new FactoryBuilding("isNoHere", "noUnits", 0, 0, 't', 't', 21, 21);
+        //closestUnit.propX = 40; closestUnit.propY = 10;
+        int closestDist = 3200;
+        foreach (Building target in buildArray)                                          //looping through array
+        {
+            if (target != null)                                                     //checking if target isnt null
+            {
+                if (target != this)                                                 // checking that the target isnt this
+                {
+                    if (target.propFaction != this.propFaction)                     //checking that the target isnt of the same faction
+                    {
+                        if (target.isDead() == false)                  // checking that the target isnt dead
+                        {
+                            int xDiff = Math.Abs(this.propX - target.propPosX);
+                            int yDiff = Math.Abs(this.propY - target.propPosY);
+                            int absDist = xDiff + yDiff;                          // finding the absolute distance
+                            if (absDist < closestDist)                            // checking if the absolute distance is closer than the previous closest distance
+                            {
+                                closestBuilding = target;                             // setting new closest enemy unit and distance
+                                closestDist = absDist;
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+        return closestBuilding;
     }
+
+    public override bool buildInRange(Building tower)
+    {
+        bool inRangeOf = false;
+        int xDiff = Math.Abs(this.propX - tower.propPosX);
+        int yDiff = Math.Abs(this.propY - tower.propPosY);
+        if (xDiff <= this.propRange && yDiff <= this.propRange)
+        {
+            inRangeOf = true;
+        }
+        return inRangeOf;
+    }
+
+    public override string moveToClosestBuilding(Building closestBuilding)
+    {
+        string direction;
+        int xDiff = Math.Abs(this.propX - closestBuilding.propPosX);
+        int yDiff = Math.Abs(this.propY - closestBuilding.propPosY);
+
+        if (xDiff <= yDiff)
+        {
+            if (this.propX - closestBuilding.propPosX < 0)
+            {
+                direction = "right";
+            }
+            else
+            {
+                direction = "left";
+            }
+        }
+        else
+        {
+            if (this.propY - closestBuilding.propPosY < 0)
+            {
+                direction = "down";
+            }
+            else
+            {
+                direction = "up";
+            }
+        }
+        return direction;
+    }
+
+    public override void combatBuilding(Building tower)
+    {
+        if (buildInRange(tower) == true) //this range check may seem unneccessary, but these things were like snipers without it
+        {
+            tower.propHp = tower.propHp - this.propAttack;
+            Debug.Log("my position" + this.propX + this.propY + " attacking enemy at position " + tower.propPosX + "X: " + tower.propPosY + "Y");
+        }
+    }
+
+    public override bool attackBuilding(Building closestBuilding, Unit closestUnit)
+    {
+        bool goForIt = false;
+        int buildAbsDist;
+        int unitAbsDist;
+
+        //find building abs distance
+        int buildXDiff = Math.Abs(this.propX - closestBuilding.propPosX);
+        int buildYDiff = Math.Abs(this.propY - closestBuilding.propPosY);
+        buildAbsDist = buildXDiff + buildYDiff;
+        // find unit abs distance
+        int unitXDiff = Math.Abs(this.propX - closestUnit.propX);
+        int unitYDiff = Math.Abs(this.propY - closestUnit.propY);
+        unitAbsDist = unitXDiff + unitYDiff;
+
+        if (buildAbsDist <= unitAbsDist)
+        {
+            goForIt = true;
+        }
+        else
+        {
+            goForIt = false;
+        }
+        return goForIt;
+    }
+
+}
 
