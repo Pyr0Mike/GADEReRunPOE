@@ -297,7 +297,7 @@ using UnityEngine;
             int xDiff = Math.Abs(this.propX - closestUnit.propX);
             int yDiff = Math.Abs(this.propY - closestUnit.propY);
 
-            if(xDiff <= yDiff)
+            if(xDiff >= yDiff)
             {
                 if(this.propX - closestUnit.propX < 0)
                 {
@@ -422,7 +422,7 @@ using UnityEngine;
         int xDiff = Math.Abs(this.propX - closestBuilding.propPosX);
         int yDiff = Math.Abs(this.propY - closestBuilding.propPosY);
 
-        if (xDiff <= yDiff)
+        if (xDiff >= yDiff)
         {
             if (this.propX - closestBuilding.propPosX < 0)
             {
@@ -449,8 +449,8 @@ using UnityEngine;
 
     public override void combatBuilding(Building tower)
     {
-        if (buildInRange(tower) == true) //this range check may seem unneccessary, but these things were like snipers without it
-        {
+        if (buildInRange(tower) == true)
+        { 
             tower.propHp = tower.propHp - this.propAttack;
             Debug.Log("my position" + this.propX + this.propY + " attacking enemy at position " + tower.propPosX + "X: " + tower.propPosY + "Y");
         }
@@ -471,7 +471,7 @@ using UnityEngine;
         int unitYDiff = Math.Abs(this.propY - closestUnit.propY);
         unitAbsDist = unitXDiff + unitYDiff;
 
-        if(buildAbsDist <= unitAbsDist)
+        if(buildAbsDist < unitAbsDist)
         {
             goForIt = true;
         }

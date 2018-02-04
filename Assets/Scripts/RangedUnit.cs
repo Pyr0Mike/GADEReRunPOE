@@ -298,7 +298,7 @@ using UnityEngine;
             int xDiff = Math.Abs(this.propX - closestUnit.propX);
             int yDiff = Math.Abs(this.propY - closestUnit.propY);
 
-            if (xDiff <= yDiff && xDiff != 0)
+            if (xDiff >= yDiff && xDiff != 0)
             {
                 if (this.propX - closestUnit.propX < 0)
                 {
@@ -420,7 +420,7 @@ using UnityEngine;
         int xDiff = Math.Abs(this.propX - closestBuilding.propPosX);
         int yDiff = Math.Abs(this.propY - closestBuilding.propPosY);
 
-        if (xDiff <= yDiff)
+        if (xDiff >= yDiff)
         {
             if (this.propX - closestBuilding.propPosX < 0)
             {
@@ -469,7 +469,7 @@ using UnityEngine;
         int unitYDiff = Math.Abs(this.propY - closestUnit.propY);
         unitAbsDist = unitXDiff + unitYDiff;
 
-        if (buildAbsDist <= unitAbsDist)
+        if (buildAbsDist < unitAbsDist)
         {
             goForIt = true;
         }
