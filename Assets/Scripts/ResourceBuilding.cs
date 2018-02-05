@@ -8,7 +8,7 @@ using UnityEngine;
 
 
 
-    class ResourceBuilding : Building
+   class ResourceBuilding : Building
     {
 
         string resourceType;

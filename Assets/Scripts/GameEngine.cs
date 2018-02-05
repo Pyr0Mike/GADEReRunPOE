@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameEngine : MonoBehaviour {
 
     private float offset = 2.56f;
-   // Map gameMap = new Map();    not actually needed
+    // Map gameMap = new Map();    not actually needed
     Unit[] unitArray;
     Building[] buildingArray;
 
@@ -105,7 +105,9 @@ public class GameEngine : MonoBehaviour {
         if ((gameTime % REFRESH == 0))
         {
             PlayGame(unitArray, buildingArray);
+            Debug.Log("Unit Array Lenght: " + unitArray.Length);
             redraw(unitArray, buildingArray);
+            Debug.Log("Unit Array Lenght: " + unitArray.Length);
             seconds++;
             Debug.Log(seconds);
 
@@ -127,10 +129,11 @@ public class GameEngine : MonoBehaviour {
         }
     }
 
-    void PlayGame(Unit[] unitArray, Building[] buildArray)
+    void PlayGame(Unit[] arrayOfUnits, Building[] arrayOfBuildings)
     {
+        
         Debug.Log("Running through playGame function");
-        foreach (Unit merc in unitArray)               //going through the units
+        foreach (Unit merc in arrayOfUnits)               //going through the units
         {
             Debug.Log("Starting unit run");
             if (merc != null)//check if unit is not null
@@ -140,34 +143,34 @@ public class GameEngine : MonoBehaviour {
                 if (merc.isDead() == false)//check that unit is not dead
                 {
 
-                    if (gameTime % merc.propSpeed == 0)
+                    if (seconds % merc.propSpeed == 0)
                     {
 
                         if (merc.propHp > merc.propMaxHp * 0.25)//check that unit is above 25% health
                         {
-                            if(merc.attackBuilding(merc.closestBuilding(buildArray), merc.closestUnit(unitArray)) == true) //check whether to attack buildings instead of units
+                            if(merc.attackBuilding(merc.closestBuilding(arrayOfBuildings), merc.closestUnit(arrayOfUnits)) == true) //check whether to attack buildings instead of units
                             {
-                                if(merc.buildInRange(merc.closestBuilding(buildArray)) == true)
+                                if(merc.buildInRange(merc.closestBuilding(arrayOfBuildings)) == true)
                                 {
-                                    merc.combatBuilding(merc.closestBuilding(buildArray));
+                                    merc.combatBuilding(merc.closestBuilding(arrayOfBuildings));
                                     Debug.Log("Unit Attacks building");
                                 }
                                 else
                                 {
-                                    merc.move(merc.moveToClosestBuilding(merc.closestBuilding(buildArray)));
+                                    merc.move(merc.moveToClosestBuilding(merc.closestBuilding(arrayOfBuildings)));
                                     Debug.Log("Unit moves towards building");
                                 }
                             }
                             else
                             {
-                                if(merc.inRange(merc.closestUnit(unitArray)) == true)
+                                if(merc.inRange(merc.closestUnit(arrayOfUnits)) == true)
                                 {
-                                    merc.combat(merc.closestUnit(unitArray));
+                                    merc.combat(merc.closestUnit(arrayOfUnits));
                                     Debug.Log("unit attacks another unit");
                                 }
                                 else
                                 {
-                                    merc.move(merc.moveToClosestUnit(merc.closestUnit(unitArray)));
+                                    merc.move(merc.moveToClosestUnit(merc.closestUnit(arrayOfUnits)));
                                     Debug.Log("unit moves towards another unit");
                                 }
                             }
@@ -194,12 +197,12 @@ public class GameEngine : MonoBehaviour {
             {
                 Debug.Log("unit is null");
             }
-            Debug.Log("run through unit functions");
+            Debug.Log("done with unit functions");
         }
 
         Debug.Log("Unit Loop done");
 
-        foreach (Building tower in buildArray)  //going through the buildings
+        foreach (Building tower in arrayOfBuildings)  //going through the buildings
         {
             if (tower != null)
             {
@@ -207,15 +210,20 @@ public class GameEngine : MonoBehaviour {
                 if (tower.isDead() == false)
                 {
 
-                    if (gameTime % tower.propSpeed == 0)
+                    if (seconds % tower.propSpeed == 0)
                     {
                         if (tower.propBuildingType == "Factory")
                         {
                              Unit newUnit = tower.generateUnit();
-
-                             Array.Resize(ref unitArray, unitArray.Length + 1);
-                             unitArray[unitArray.Length - 1] = newUnit;
-                            Debug.Log("Made a unit: " + newUnit.propPicName);
+                            //arrayResize(unitArray.Length + 1, ref unitArray, newUnit);
+                             Array.Resize(ref unitArray, unitArray.Length + 1);              //increasing array size and adding new units to the array
+                            unitArray[unitArray.Length - 1] = newUnit;
+                            if(newUnit == null || newUnit.isDead() == true) //trying to find out why new units arent showing up
+                            {
+                                Debug.Log("new Unit is null or dead");
+                            }
+                            Debug.Log("Made a unit: " + newUnit.propPicName + " at X: " + newUnit.propX + " Y:" + newUnit.propY);
+                           // Debug.Log("Unit Array Lenght" + arrayOfUnits.Length);
                         }
                         else
                         {
@@ -232,17 +240,19 @@ public class GameEngine : MonoBehaviour {
                     tower.propSymbol = 'U';
                 }
             }
-            Debug.Log("run through building functions");
+            Debug.Log("done with building functions");
         }
         Debug.Log("building loop done");
 
         Debug.Log("done with playgame function");
+
+        
     }
 
     //put new methods here
-    void drawUnits(Unit[] unitArray)
+    void drawUnits(Unit[] arrayOfUnits)
     {
-        foreach(Unit merc in unitArray)
+        foreach(Unit merc in arrayOfUnits)
         {
             if(!merc.isDead())
             {
@@ -252,9 +262,9 @@ public class GameEngine : MonoBehaviour {
         }
     }
 
-    void drawBuildings(Building[] buildArray)
+    void drawBuildings(Building[] arrayOfBuidings)
     {
-        foreach(Building tower in buildArray)
+        foreach(Building tower in arrayOfBuidings)
         {
             if(!tower.isDead())
             {
@@ -265,15 +275,15 @@ public class GameEngine : MonoBehaviour {
         }
     }
     
-    void redraw(Unit[] unitArray, Building[] buildArray)
+    void redraw(Unit[] arrayOfUnits, Building[] arrayOfBuildings)
     {
         GameObject[] forDeletion = GameObject.FindGameObjectsWithTag("redrawSprite");
         foreach (GameObject temp in forDeletion)
         {
             Destroy(temp.gameObject);
         }
-        drawUnits(unitArray);
-        drawBuildings(buildArray);
+        drawUnits(arrayOfUnits);
+        drawBuildings(arrayOfBuildings);
         Debug.Log("Objects redrawn");
     }
 
@@ -285,6 +295,18 @@ public class GameEngine : MonoBehaviour {
         int roundedHp = Mathf.CeilToInt((float)hpPercentage);
         returnHp += roundedHp;
         return returnHp;
+    }
+
+    void arrayResize(int Size, ref Unit[] array, Unit genUnit)
+    {
+
+        Unit[] temp = new Unit[Size];
+        for (int c = 1; c < Mathf.Min(Size, array.Length); c++)
+        {
+            temp[c] = array[c];
+        }
+        array = temp;
+        array[array.Length - 1] = genUnit;
     }
 
 
